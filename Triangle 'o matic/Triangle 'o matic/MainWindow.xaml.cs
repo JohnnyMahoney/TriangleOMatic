@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -20,8 +21,7 @@ namespace Triangle__o_matic
             InitializeComponent();
             Draw_CoordSys(leX, leY);
 
-            Make_Triangle(new Point(5, 5), "ld");
-            Make_Triangle(new Point(31, 5), "ld");
+
 
         }
 
@@ -88,23 +88,67 @@ namespace Triangle__o_matic
                     temp.Pt2 = new Point(pt1.X - 1, pt1.Y);
                     temp.Pt3 = new Point(pt1.X - 1, pt1.Y - 1);
                     break;
+                case "dr":
+                    temp.Pt2 = new Point(pt1.X, pt1.Y + 1);
+                    temp.Pt3 = new Point(pt1.X + 1, pt1.Y + 1);
+                    break;
+                case "ur":
+                    temp.Pt2 = new Point(pt1.X, pt1.Y - 1);
+                    temp.Pt3 = new Point(pt1.X + 1, pt1.Y - 1);
+                    break;
+                case "dl":
+                    temp.Pt2 = new Point(pt1.X, pt1.Y + 1);
+                    temp.Pt3 = new Point(pt1.X - 1, pt1.Y + 1);
+                    break;
+                case "ul":
+                    temp.Pt2 = new Point(pt1.X, pt1.Y - 1);
+                    temp.Pt3 = new Point(pt1.X - 1, pt1.Y - 1);
+                    break;
                 default:
                     break;
             }
 
             temp.Convert(leX, leY);
 
-            if (temp.GetMax().X >= CoordSys.Width | temp.GetMax().Y >= CoordSys.Height)
+            if (!(temp.GetMax().X >= CoordSys.Width | temp.GetMax().Y >= CoordSys.Height))
             {
-                temp = null;
+                for (int i = 0; i < DreieckListe.Count; i++)
+                {
+                    if (DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3)
+                    {
+                        temp = null;
+                        MessageBox.Show("Dieses Dreieck existiert bereits!");
+                        break;
+                    }//das if als switch um alle möglichkeiten zu handeln, wie dreiecke liegen (dass sie sich nur berühren und nicht überlappen)
+
+                }
+                if (temp != null)
+                {
+                    Draw_Triangle(temp);
+                }
             }
             else
             {
-                Draw_Triangle(temp);
+                MessageBox.Show("Das Dreieck liegt ausserhalb des zulässigen Bereichs!");
             }
 
+
+        }
+        private Point RandomPointGen()
+        {
+            var rnd = new Random(new System.DateTime().Millisecond + Guid.NewGuid().GetHashCode());
+            return new Point(rnd.Next(int.Parse(CoordSys.Width.ToString()) / leX), rnd.Next(int.Parse(CoordSys.Height.ToString()) / leY));
+        }
+        private string RandomDirection()
+        {
+            var rnd = new Random(new System.DateTime().Millisecond + Guid.NewGuid().GetHashCode());
+            string[] directions = new string[] { "rd", "ru", "dr", "ur", "ld", "lu", "dl", "ul" };
+            return directions[rnd.Next(0, 7)];
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Make_Triangle(RandomPointGen(), RandomDirection());
+        }
     }
 }
