@@ -45,7 +45,7 @@ namespace Triangle__o_matic
             coordDot.SetValue(Canvas.LeftProperty, (double)x);
             coordDot.SetValue(Canvas.TopProperty, (double)y);
         }
-        private void Draw_Triangle(Dreieck dreieck)
+        private void Draw_Triangle(Dreieck dreieck, Canvas target)
         {
             Polygon triangle = new Polygon();
             var points = new PointCollection();
@@ -59,8 +59,8 @@ namespace Triangle__o_matic
             points.Add(dreieck.Pt3);
 
             triangle.Points = points;
-            CoordSys.Children.Add(triangle);
-            DreieckListe.Add(dreieck);
+            target.Children.Add(triangle);
+
         }
         private void Make_Triangle(Point pt1, string direction)
         {
@@ -114,22 +114,31 @@ namespace Triangle__o_matic
             {
                 for (int i = 0; i < DreieckListe.Count; i++)
                 {
-                    if (DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3)
+                    if (!(DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 | DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt3 == temp.Pt3 | DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3))
+                    {
+                        //temp = null;
+                        //MessageBox.Show("Dieses Dreieck liegt an keiner Kante eines existierenden Dreiecks!");
+                        break;
+                    }
+                    else if (DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3)
                     {
                         temp = null;
-                        MessageBox.Show("Dieses Dreieck existiert bereits!");
+                        //MessageBox.Show("Dieses Dreieck existiert bereits!");
                         break;
-                    }//das if als switch um alle möglichkeiten zu handeln, wie dreiecke liegen (dass sie sich nur berühren und nicht überlappen)
+
+                    }
 
                 }
                 if (temp != null)
                 {
-                    Draw_Triangle(temp);
+                    Draw_Triangle(temp, CoordSys);
+                    DreieckListe.Add(temp);
+                    Controls(direction);
                 }
             }
             else
             {
-                MessageBox.Show("Das Dreieck liegt ausserhalb des zulässigen Bereichs!");
+                //MessageBox.Show("Das Dreieck liegt ausserhalb des zulässigen Bereichs!");
             }
 
 
@@ -145,10 +154,16 @@ namespace Triangle__o_matic
             string[] directions = new string[] { "rd", "ru", "dr", "ur", "ld", "lu", "dl", "ul" };
             return directions[rnd.Next(0, 7)];
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Make_Triangle(RandomPointGen(), RandomDirection());
         }
+        private void Controls(string currentDir)
+        {
+
+            Draw_Triangle(current, CanvasControls);
+
+        }
+
     }
 }

@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Triangle__o_matic"
         mc:Ignorable="d"
-        Title="Triangle 'o matic" Height="600" Width="800" ResizeMode="NoResize" ShowInTaskbar="False">
-    <Grid>
+        Title="Triangle 'o matic" Height="768" Width="1024" ResizeMode="NoResize" ShowInTaskbar="False">
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Canvas x:Name="CoordSys" HorizontalAlignment="Center" Height="400" Margin="0" VerticalAlignment="Center" Width="600"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="364,29,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Button" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Canvas x:Name="CanvasControls" HorizontalAlignment="Center" Height="150" Margin="0" Grid.Row="1" VerticalAlignment="Center" Width="500"/>
 
     </Grid>
 </Window>
