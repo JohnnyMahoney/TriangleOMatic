@@ -110,14 +110,18 @@ namespace Triangle__o_matic
 
             temp.Convert(leX, leY);
 
-            if (!(temp.GetMax().X >= CoordSys.Width | temp.GetMax().Y >= CoordSys.Height))
+            if (!(temp.GetMax().X >= CoordSys.Width | temp.GetMax().Y >= CoordSys.Height)) //Dreieck liegt innerhalb des Koordsystems
             {
-                for (int i = 0; i < DreieckListe.Count; i++)
+                for (int i = 0; i < DreieckListe.Count; i++) //Überprüfe vorhandene Dreiecke
                 {
                     if (!(DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 | DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt3 == temp.Pt3 | DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3))
-                    {
+                    { //Muss 2 gemeinsame Punkte haben
+                        if (temp.Pt1.X == temp.Pt2.X | temp.Pt1.X == temp.Pt3.X)
+                        {
+
+                        }
                         //gegenuberliegende punkte checken! 
-                        //temp = null;
+                        temp = null;
                         //MessageBox.Show("Dieses Dreieck liegt an keiner Kante eines existierenden Dreiecks!");
                         break;
                     }
@@ -126,7 +130,6 @@ namespace Triangle__o_matic
                         temp = null;
                         //MessageBox.Show("Dieses Dreieck existiert bereits!");
                         break;
-
                     }
 
                 }
