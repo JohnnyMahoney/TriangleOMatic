@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Shapes;
 
 namespace Triangle__o_matic
 {
@@ -13,7 +13,7 @@ namespace Triangle__o_matic
         public Point Pt1 { get { return _pt1; } set { _pt1 = value; } }
         public Point Pt2 { get { return _pt2; } set { _pt2 = value; } }
         public Point Pt3 { get { return _pt3; } set { _pt3 = value; } }
-
+        public int Orientation;
 
         public void Convert(int factorx, int factory)
         {

@@ -1,3 +1,8 @@
-ändern der erstellung
-	entkoppeln von generieren, überprüfen, malen/in liste adden
+Ordnen der Funktionen und Classen!!!!!
+
+
+Controls überdenken
+
+
+
 
