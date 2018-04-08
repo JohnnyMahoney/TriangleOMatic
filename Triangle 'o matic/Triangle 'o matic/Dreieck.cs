@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 
 namespace Triangle__o_matic
 {
@@ -45,9 +46,27 @@ namespace Triangle__o_matic
 
             return new Point(x, y);
         }
-        /*private void Validate()
+        public Point GetMin()
         {
+            double x, y;
+            if (this.Pt1.X >= this.Pt2.X)
+            {
+                x = this.Pt2.X;
+            }
+            else
+            {
+                x = this.Pt1.X;
+            }
+            if (this.Pt1.Y >= this.Pt2.Y)
+            {
+                y = this.Pt2.Y;
+            }
+            else
+            {
+                y = this.Pt1.Y;
+            }
 
-        }*/
+            return new Point(x, y);
+        }
     }
 }

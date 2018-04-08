@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -62,7 +63,7 @@ namespace Triangle__o_matic
             target.Children.Add(triangle);
 
         }
-        private void Make_Triangle(Point pt1, string direction)
+        private void Generate_Triangle(Point pt1, string direction)
         {
             Dreieck temp = new Dreieck();
 
@@ -104,49 +105,174 @@ namespace Triangle__o_matic
                     temp.Pt2 = new Point(pt1.X, pt1.Y - 1);
                     temp.Pt3 = new Point(pt1.X - 1, pt1.Y - 1);
                     break;
+                case "q1":
+                    temp.Pt2 = new Point(pt1.X + 1, pt1.Y);
+                    temp.Pt3 = new Point(pt1.X, pt1.Y - 1);
+                    break;
+                case "q2":
+                    temp.Pt2 = new Point(pt1.X - 1, pt1.Y);
+                    temp.Pt3 = new Point(pt1.X, pt1.Y - 1);
+                    break;
+                case "q3":
+                    temp.Pt2 = new Point(pt1.X - 1, pt1.Y);
+                    temp.Pt3 = new Point(pt1.X, pt1.Y + 1);
+                    break;
+                case "q4":
+                    temp.Pt2 = new Point(pt1.X + 1, pt1.Y);
+                    temp.Pt3 = new Point(pt1.X, pt1.Y + 1);
+                    break;
                 default:
                     break;
             }
 
             temp.Convert(leX, leY);
 
-            if (!(temp.GetMax().X >= CoordSys.Width | temp.GetMax().Y >= CoordSys.Height)) //Dreieck liegt innerhalb des Koordsystems
+
+            //if (!(temp.GetMax().X >= CoordSys.Width | temp.GetMax().Y >= CoordSys.Height)) //Dreieck liegt innerhalb des Koordsystems
+            //{
+            //    for (int i = 0; i < DreieckListe.Count; i++) //Überprüfe vorhandene Dreiecke
+            //    {
+            //        if (!(DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 | DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt3 == temp.Pt3 | DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3))
+            //        { //Muss 2 gemeinsame Punkte haben
+            //            double _x;
+            //            double _y;
+            //            if (temp.Pt1.X == temp.Pt2.X | temp.Pt1.X == temp.Pt3.X)
+            //            {
+            //                _x = temp.Pt1.X;
+            //            }
+            //            else
+            //            {
+            //                _x = temp.Pt2.X;
+            //            }
+
+            //            //gegenuberliegende punkte checken! 
+            //            temp = null;
+            //            //MessageBox.Show("Dieses Dreieck liegt an keiner Kante eines existierenden Dreiecks!");
+            //            break;
+            //        }
+            //        else if (DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3)
+            //        {
+            //            temp = null;
+            //            //MessageBox.Show("Dieses Dreieck existiert bereits!");
+            //            break;
+            //        }
+            //        else if (true)
+            //        {
+
+            //        }
+
+            //    }
+            //    if (temp != null)
+            //    {
+            //        Draw_Triangle(temp, CoordSys);
+            //        DreieckListe.Add(temp);
+            //        Controls(direction);
+            //    }
+            //}
+            //else
+            //{
+            //    //MessageBox.Show("Das Dreieck liegt ausserhalb des zulässigen Bereichs!");
+            //}
+            if (Validate_Triangle(temp))
             {
-                for (int i = 0; i < DreieckListe.Count; i++) //Überprüfe vorhandene Dreiecke
-                {
-                    if (!(DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 | DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt3 == temp.Pt3 | DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3))
-                    { //Muss 2 gemeinsame Punkte haben
-                        if (temp.Pt1.X == temp.Pt2.X | temp.Pt1.X == temp.Pt3.X)
-                        {
+                Draw_Triangle(temp, CoordSys);
+                DreieckListe.Add(temp);
+                //Controls(direction);
+            }
 
-                        }
-                        //gegenuberliegende punkte checken! 
-                        temp = null;
-                        //MessageBox.Show("Dieses Dreieck liegt an keiner Kante eines existierenden Dreiecks!");
-                        break;
-                    }
-                    else if (DreieckListe[i].Pt1 == temp.Pt1 && DreieckListe[i].Pt2 == temp.Pt2 && DreieckListe[i].Pt3 == temp.Pt3)
+
+
+        }
+
+        private bool Validate_Triangle(Dreieck _dreieck)
+        {
+            /* 1. Dreieck im Koordinatenbereich
+             * 2. Dreieck noch nicht vorhanden
+             * 3. Dreieck muss 2 Punkte mit einem Dreieck gemeinsam haben
+             * 4. Dreieck darf andere Dreiecke nicht überlappen (Mehrzahl!!!)*/
+
+            //1
+            if (_dreieck.GetMax().X >= CoordSys.Width | _dreieck.GetMax().Y >= CoordSys.Height) //| _dreieck.GetMin().X <= CoordSys.Width | _dreieck.GetMin().Y <= CoordSys.Height)
+            {
+                return false;
+            }
+
+            //2 und 3 und 4
+            var PointListCurrentListItem = new List<Point>();
+            var samePoints = new List<Point>();
+            var eligibleDreieckeToAddTo = new List<Dreieck>();
+            bool overlap = false;
+            if (DreieckListe.Count > 0)
+            {
+                foreach (var listItem in DreieckListe)
+                {
+                    PointListCurrentListItem.Add(_dreieck.Pt1);
+                    PointListCurrentListItem.Add(_dreieck.Pt2);
+                    PointListCurrentListItem.Add(_dreieck.Pt3);
+                    PointListCurrentListItem.Add(listItem.Pt1);
+                    PointListCurrentListItem.Add(listItem.Pt2);
+                    PointListCurrentListItem.Add(listItem.Pt3);
+
+
+                    if (_dreieck.Pt1 == listItem.Pt1 | _dreieck.Pt1 == listItem.Pt2 | _dreieck.Pt1 == listItem.Pt3)
                     {
-                        temp = null;
-                        //MessageBox.Show("Dieses Dreieck existiert bereits!");
-                        break;
+                        samePoints.Add(_dreieck.Pt1);
+                    }
+                    if (_dreieck.Pt2 == listItem.Pt1 | _dreieck.Pt2 == listItem.Pt2 | _dreieck.Pt2 == listItem.Pt3)
+                    {
+                        samePoints.Add(_dreieck.Pt2);
+                    }
+                    if (_dreieck.Pt3 == listItem.Pt1 | _dreieck.Pt3 == listItem.Pt2 | _dreieck.Pt3 == listItem.Pt3)
+                    {
+                        samePoints.Add(_dreieck.Pt3);
                     }
 
-                }
-                if (temp != null)
-                {
-                    Draw_Triangle(temp, CoordSys);
-                    DreieckListe.Add(temp);
-                    Controls(direction);
+
+
+                    switch (samePoints.Count)
+                    {
+                        case 2:
+                            eligibleDreieckeToAddTo.Add(listItem);
+                            var pt1 = new Point(PointListCurrentListItem.Distinct().ToList()[0].X, PointListCurrentListItem.Distinct().ToList()[0].Y);
+                            var pt2 = new Point(PointListCurrentListItem.Distinct().ToList()[1].X, PointListCurrentListItem.Distinct().ToList()[1].Y);
+                            if (!((pt1.X == pt2.X && pt1.Y != pt2.Y) | (pt1.X != pt2.X && pt1.Y == pt2.Y)))
+                            {
+                                overlap = true;
+                            }
+                            break;
+                        case 3:
+                            return false;
+                        default:
+                            break;
+                    }
+
+
+
+
+
+
+
+                    samePoints.Clear();
+                    PointListCurrentListItem.Clear();
+
                 }
             }
             else
             {
-                //MessageBox.Show("Das Dreieck liegt ausserhalb des zulässigen Bereichs!");
+                return true;
             }
 
+            if (eligibleDreieckeToAddTo.Count != 0 && !overlap)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
+
         private Point RandomPointGen()
         {
             var rnd = new Random(new System.DateTime().Millisecond + Guid.NewGuid().GetHashCode());
@@ -155,17 +281,34 @@ namespace Triangle__o_matic
         private string RandomDirection()
         {
             var rnd = new Random(new System.DateTime().Millisecond + Guid.NewGuid().GetHashCode());
-            string[] directions = new string[] { "rd", "ru", "dr", "ur", "ld", "lu", "dl", "ul" };
-            return directions[rnd.Next(0, 7)];
+            string[] directions = new string[] { "rd", "ru", "dr", "ur", "ld", "lu", "dl", "ul", "q1", "q2", "q3", "q4" };
+            return directions[rnd.Next(0, 11)];
+        }
+        private void MakeRandomTriangle()
+        {
+            Generate_Triangle(RandomPointGen(), RandomDirection());
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Make_Triangle(RandomPointGen(), RandomDirection());
+            //int _switchis = DreieckListe.Count + 1;
+            //while (DreieckListe.Count < _switchis)
+            //{
+            //    MakeRandomTriangle();
+
+            //}
+
+            while (DreieckListe.Count < 200)
+            {
+                MakeRandomTriangle();
+            }
+            //MakeRandomTriangle();
+
+
         }
         private void Controls(string currentDir)
         {
 
-            Draw_Triangle(current, CanvasControls);
+            Draw_Triangle(DreieckListe[DreieckListe.Count - 1], CanvasControls);
 
         }
 
