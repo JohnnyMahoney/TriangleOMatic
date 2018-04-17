@@ -1,9 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Shapes;
+using static Triangle__o_matic.MainWindow;
 
 namespace Triangle__o_matic
 {
-    class Dreieck
+    public class Dreieck
     {
 
         private Point _pt1;
