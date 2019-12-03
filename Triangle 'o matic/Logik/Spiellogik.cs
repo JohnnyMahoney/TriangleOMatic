@@ -41,25 +41,25 @@ namespace Triangle__o_matic
             {
                 foreach (var listItem in DreieckListe)
                 {
-                    PointListCurrentListItem.Add(_dreieck.Pt1);
-                    PointListCurrentListItem.Add(_dreieck.Pt2);
-                    PointListCurrentListItem.Add(_dreieck.Pt3);
-                    PointListCurrentListItem.Add(listItem.Pt1);
-                    PointListCurrentListItem.Add(listItem.Pt2);
-                    PointListCurrentListItem.Add(listItem.Pt3);
+                    PointListCurrentListItem.Add(_dreieck.PunktA);
+                    PointListCurrentListItem.Add(_dreieck.PunktB);
+                    PointListCurrentListItem.Add(_dreieck.PunktC);
+                    PointListCurrentListItem.Add(listItem.PunktA);
+                    PointListCurrentListItem.Add(listItem.PunktB);
+                    PointListCurrentListItem.Add(listItem.PunktC);
 
 
-                    if (_dreieck.Pt1 == listItem.Pt1 | _dreieck.Pt1 == listItem.Pt2 | _dreieck.Pt1 == listItem.Pt3)
+                    if (_dreieck.PunktA == listItem.PunktA | _dreieck.PunktA == listItem.PunktB | _dreieck.PunktA == listItem.PunktC)
                     {
-                        samePoints.Add(_dreieck.Pt1);
+                        samePoints.Add(_dreieck.PunktA);
                     }
-                    if (_dreieck.Pt2 == listItem.Pt1 | _dreieck.Pt2 == listItem.Pt2 | _dreieck.Pt2 == listItem.Pt3)
+                    if (_dreieck.PunktB == listItem.PunktA | _dreieck.PunktB == listItem.PunktB | _dreieck.PunktB == listItem.PunktC)
                     {
-                        samePoints.Add(_dreieck.Pt2);
+                        samePoints.Add(_dreieck.PunktB);
                     }
-                    if (_dreieck.Pt3 == listItem.Pt1 | _dreieck.Pt3 == listItem.Pt2 | _dreieck.Pt3 == listItem.Pt3)
+                    if (_dreieck.PunktC == listItem.PunktA | _dreieck.PunktC == listItem.PunktB | _dreieck.PunktC == listItem.PunktC)
                     {
-                        samePoints.Add(_dreieck.Pt3);
+                        samePoints.Add(_dreieck.PunktC);
                     }
 
                     switch (samePoints.Count)

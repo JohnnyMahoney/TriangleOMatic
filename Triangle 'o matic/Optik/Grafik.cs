@@ -25,9 +25,9 @@ namespace Triangle__o_matic
             triangle.StrokeThickness = 1;
             triangle.Fill = Brushes.OrangeRed;
 
-            points.Add(dreieck.Pt1);
-            points.Add(dreieck.Pt2);
-            points.Add(dreieck.Pt3);
+            points.Add(dreieck.PunktA);
+            points.Add(dreieck.PunktB);
+            points.Add(dreieck.PunktC);
             triangle.Points = points;
 
             triangle.MouseEnter += OnTriangleHover;
@@ -40,70 +40,68 @@ namespace Triangle__o_matic
         {
             Dreieck temp = new Dreieck();
 
-            temp.Pt1 = pt1;
+            temp.PunktA = pt1;
 
             switch (direction)
             {
-
-
                 case "rd":
-                    temp.Pt2 = new Point(pt1.X + 1, pt1.Y);
-                    temp.Pt3 = new Point(pt1.X + 1, pt1.Y + 1);
+                    temp.PunktB = new Point(pt1.X + 1, pt1.Y);
+                    temp.PunktC = new Point(pt1.X + 1, pt1.Y + 1);
                     temp.Orientation = 3;
                     break;
                 case "ru":
-                    temp.Pt2 = new Point(pt1.X + 1, pt1.Y);
-                    temp.Pt3 = new Point(pt1.X + 1, pt1.Y - 1);
+                    temp.PunktB = new Point(pt1.X + 1, pt1.Y);
+                    temp.PunktC = new Point(pt1.X + 1, pt1.Y - 1);
                     temp.Orientation = 2;
                     break;
                 case "ld":
-                    temp.Pt2 = new Point(pt1.X - 1, pt1.Y);
-                    temp.Pt3 = new Point(pt1.X - 1, pt1.Y + 1);
+                    temp.PunktB = new Point(pt1.X - 1, pt1.Y);
+                    temp.PunktC = new Point(pt1.X - 1, pt1.Y + 1);
                     temp.Orientation = 4;
                     break;
                 case "lu":
-                    temp.Pt2 = new Point(pt1.X - 1, pt1.Y);
-                    temp.Pt3 = new Point(pt1.X - 1, pt1.Y - 1);
+                    temp.PunktB = new Point(pt1.X - 1, pt1.Y);
+                    temp.PunktC = new Point(pt1.X - 1, pt1.Y - 1);
                     temp.Orientation = 1;
                     break;
                 case "dr":
-                    temp.Pt2 = new Point(pt1.X, pt1.Y + 1);
-                    temp.Pt3 = new Point(pt1.X + 1, pt1.Y + 1);
+                    temp.PunktB = new Point(pt1.X, pt1.Y + 1);
+                    temp.PunktC = new Point(pt1.X + 1, pt1.Y + 1);
                     temp.Orientation = 1;
                     break;
                 case "ur":
-                    temp.Pt2 = new Point(pt1.X, pt1.Y - 1);
-                    temp.Pt3 = new Point(pt1.X + 1, pt1.Y - 1);
+                    temp.PunktB = new Point(pt1.X, pt1.Y - 1);
+                    temp.PunktC = new Point(pt1.X + 1, pt1.Y - 1);
                     temp.Orientation = 4;
                     break;
                 case "dl":
-                    temp.Pt2 = new Point(pt1.X, pt1.Y + 1);
-                    temp.Pt3 = new Point(pt1.X - 1, pt1.Y + 1);
+                    temp.PunktB = new Point(pt1.X, pt1.Y + 1);
+                    temp.PunktC = new Point(pt1.X - 1, pt1.Y + 1);
                     temp.Orientation = 2;
                     break;
                 case "ul":
-                    temp.Pt2 = new Point(pt1.X, pt1.Y - 1);
-                    temp.Pt3 = new Point(pt1.X - 1, pt1.Y - 1);
+                    temp.PunktB = new Point(pt1.X, pt1.Y - 1);
+                    temp.PunktC = new Point(pt1.X - 1, pt1.Y - 1);
                     temp.Orientation = 3;
                     break;
                 case "q1":
-                    temp.Pt2 = new Point(pt1.X + 1, pt1.Y);
-                    temp.Pt3 = new Point(pt1.X, pt1.Y - 1);
+                    temp.PunktB = new Point(pt1.X + 1, pt1.Y);
+                    temp.PunktC = new Point(pt1.X, pt1.Y - 1);
                     temp.Orientation = 1;
                     break;
                 case "q2":
-                    temp.Pt2 = new Point(pt1.X - 1, pt1.Y);
-                    temp.Pt3 = new Point(pt1.X, pt1.Y - 1);
+                    temp.PunktB = new Point(pt1.X - 1, pt1.Y);
+                    temp.PunktC = new Point(pt1.X, pt1.Y - 1);
                     temp.Orientation = 2;
                     break;
                 case "q3":
-                    temp.Pt2 = new Point(pt1.X - 1, pt1.Y);
-                    temp.Pt3 = new Point(pt1.X, pt1.Y + 1);
+                    temp.PunktB = new Point(pt1.X - 1, pt1.Y);
+                    temp.PunktC = new Point(pt1.X, pt1.Y + 1);
                     temp.Orientation = 3;
                     break;
                 case "q4":
-                    temp.Pt2 = new Point(pt1.X + 1, pt1.Y);
-                    temp.Pt3 = new Point(pt1.X, pt1.Y + 1);
+                    temp.PunktB = new Point(pt1.X + 1, pt1.Y);
+                    temp.PunktC = new Point(pt1.X, pt1.Y + 1);
                     temp.Orientation = 4;
                     break;
                 default:

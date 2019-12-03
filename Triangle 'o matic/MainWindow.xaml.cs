@@ -13,6 +13,7 @@ namespace Triangle__o_matic
         public static int leX = 20;
         public static int leY = 20;
         public static List<Dreieck> DreieckListe = new List<Dreieck>();
+
         public MainWindow()
         {
 
