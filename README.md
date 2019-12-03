@@ -7,8 +7,5 @@ Der Spieler muss nun neue Dreiecke anfügen.
 Hierbei gilt: die Dreiecke müssen Seite an Seite liegen. Bei der so enstehenden 
 Figur haben die äußeren Dreiecke den Wert 1. Die zweitäußersten Dreiecke haben 
 den Wert 2 usw. bis das am meisten Innen liegende Dreieck die höchste Punktzahl 
-erhält. Alle Punkte werden ständig aufsummiert und iel ist es eine spezielle 
+erhält. Alle Punkte werden ständig aufsummiert und Ziel ist es eine spezielle 
 vorgegebene Punktzahl zu erreichen.
-
-Das spannende beim programmieren ist nun die bestimmung wo das Dreieck liegt um 
-den Punktewert zu berechnen und die Grafik dazu.
